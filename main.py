@@ -54,6 +54,7 @@ def save():
             # Add the new data to the existing
             data.update(new_data)
 
+        # Write the into the json file, NOTICE the modes being used in the two cases(reading and writing)
         with open("data.json", mode="w") as data_file:
             json.dump(data, data_file, indent=4)
 
