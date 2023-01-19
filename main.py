@@ -60,9 +60,10 @@ def save():
             # Write the updated data into the json file
             with open("data.json", mode="w") as data_file:
                 json.dump(data, data_file, indent=4)
-
-    website_entry.delete(0, END)
-    password_entry.delete(0, END)
+        finally:
+            # This block of code is executed no matter what happens in try, except and else
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
