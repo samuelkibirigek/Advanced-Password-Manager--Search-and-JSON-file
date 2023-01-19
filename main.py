@@ -45,18 +45,21 @@ def save():
                 "password": password
             }
         }
-
-        # Updating the json file to take new data as it comes
-        with open("data.json", mode="r") as data_file:
-            # Read the old(existing) data in the file
-            data = json.load(data_file)
-
-            # Add the new data to the existing
+        try:
+            # Updating the json file to take new data as it comes
+            with open("data.json", mode="r") as data_file:
+                # Read the old(existing) data in the file
+                data = json.load(data_file)
+        except FileNotFoundError:
+            # Create the file if it is nonexistent and save the new_data to it
+            with open("data.json", mode="w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            # Update the dictionary holding existing data to append the new as well
             data.update(new_data)
-
-        # Write the into the json file, NOTICE the modes being used in the two cases(reading and writing)
-        with open("data.json", mode="w") as data_file:
-            json.dump(data, data_file, indent=4)
+            # Write the updated data into the json file
+            with open("data.json", mode="w") as data_file:
+                json.dump(data, data_file, indent=4)
 
     website_entry.delete(0, END)
     password_entry.delete(0, END)
