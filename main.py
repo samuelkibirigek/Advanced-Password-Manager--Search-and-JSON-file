@@ -46,9 +46,16 @@ def save():
             }
         }
 
-        # Creating the JSON file and adding our data to it
+        # Updating the json file to take new data as it comes
+        with open("data.json", mode="r") as data_file:
+            # Read the old(existing) data in the file
+            data = json.load(data_file)
+
+            # Add the new data to the existing
+            data.update(new_data)
+
         with open("data.json", mode="w") as data_file:
-            json.dump(new_data, data_file, indent=4)
+            json.dump(data, data_file, indent=4)
 
     website_entry.delete(0, END)
     password_entry.delete(0, END)
