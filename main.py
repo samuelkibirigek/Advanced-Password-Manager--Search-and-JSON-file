@@ -28,6 +28,25 @@ def generate_password():
     password_entry.insert(0, password)
     pyperclip.copy(password)
 
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+
+
+def find_password():
+    website_search = website_entry.get()
+    try:
+        with open("data.json", mode="r") as data_file:
+            data = json.load(data_file)
+            try:
+                website_name = data[website_search]
+            except KeyError:
+                messagebox.showinfo(title="Error", message="No detail for the website exists")
+            else:
+                if website_name:
+                    messagebox.showinfo(title=website_search, message=f"Email: {website_name['email']}"
+                                                                      f"\nPassword: {website_name['password']}")
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found")
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -96,6 +115,8 @@ password_entry = Entry()
 password_entry.grid(row=3, column=1, sticky=EW)
 
 # Buttons
+search_password_button = Button(text="Search", command=find_password)
+search_password_button.grid(row=1, column=2, sticky=EW)
 generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(row=3, column=2, sticky=EW)
 add_button = Button(text="Add", width=35, command=save)
